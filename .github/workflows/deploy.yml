@@ -37,4 +37,5 @@ jobs:
           --registry-username arabicdigitsacr \
           --registry-password $(az acr credential show --name arabicdigitsacr --query passwords[0].value -o tsv) \
           --dns-name-label arabic-digits-app \
-          --ports 5000
+          --ports 80 \
+          --os-type Linux
