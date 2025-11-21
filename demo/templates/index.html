@@ -3,9 +3,75 @@
 <html lang="ar" dir="rtl">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
     <script src= "{{url_for('static', filename='jquery-2.2.4.min.js')}}"></script>
-    <title></title>
+    <title>Arabic Digits Recognition</title>
+    <style>
+      /* Mobile-first responsive design */
+      #canvas {
+        border: 2px solid #333;
+        background-color: #000;
+        border-radius: 8px;
+        cursor: crosshair;
+        touch-action: none; /* Prevent scrolling while drawing */
+        max-width: 100%;
+        height: auto;
+      }
+      
+      .btn-lg {
+        padding: 0.75rem 1.5rem;
+        font-size: 1.1rem;
+        min-height: 44px; /* Touch-friendly minimum size */
+        margin: 0.5rem 0;
+      }
+      
+      .canvas-container {
+        display: flex;
+        justify-content: center;
+        margin: 1rem 0;
+      }
+      
+      .btn-container {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 1rem 0;
+      }
+      
+      /* Mobile specific adjustments */
+      @media (max-width: 768px) {
+        #canvas {
+          width: 100%;
+          max-width: 350px;
+          height: 350px;
+        }
+        
+        .btn-lg {
+          flex: 1;
+          min-width: 140px;
+          font-size: 0.9rem;
+        }
+        
+        .container {
+          padding: 0 1rem;
+        }
+        
+        h5 {
+          font-size: 1.1rem;
+          margin-bottom: 1rem;
+        }
+      }
+      
+      /* Larger screens */
+      @media (min-width: 769px) {
+        #canvas {
+          width: 400px;
+          height: 400px;
+        }
+      }
+    </style>
   </head>
   <body>
       <div class="container">
@@ -14,14 +80,15 @@
                   <h5 class="text-center">Handwritten Arabic Digits Recognition using Neural Networks</h5>
               </div>
               <div class="column col-12">
-                  <canvas class="p-centered" id="canvas" width="400" height="400" style="border:1px solid #000; background-color: #000;"></canvas>
-                  <div class="divider"></div>
+                  <div class="canvas-container">
+                      <canvas id="canvas" width="400" height="400"></canvas>
+                  </div>
               </div>
-              <div class="column col-6">
-                  <a id="save" class="p-centered btn btn-primary btn-lg" href="#" onClick="savePix()">تعرف على الرقم</a>
-              </div>
-              <div class="column col-6">
-                  <a id="save" class="p-centered btn btn-primary btn-lg" href="/">مسح</a>
+              <div class="column col-12">
+                  <div class="btn-container">
+                      <button id="detect-btn" class="btn btn-primary btn-lg" onclick="savePix()">تعرف على الرقم Detect</button>
+                      <button id="clear-btn" class="btn btn-secondary btn-lg" onclick="clearCanvas()">مسح Clear</button>
+                  </div>
               </div>
               <div class="column col-12">
                   <div class="modal" id="modal-id">
@@ -29,7 +96,7 @@
                       <div class="modal-container">
                           <div class="modal-header">
                               <a href="#close" onclick="closeModal()" class="btn btn-clear float-left" aria-label="Close"></a>
-                              <div class="modal-title h5 p-centered">لقد قمت بإدخال الرقم</div>
+                              <div class="modal-title h5 p-centered">لقد قمت بإدخال الرقم The number is </div>
                           </div>
                           <div class="modal-body">
                               <div class="content">
@@ -160,6 +227,15 @@
       };
      function closeModal(){
          $('#modal-id').removeClass('active');
+     };
+     
+     function clearCanvas(){
+         clickX = new Array();
+         clickY = new Array();
+         clickDrag = new Array();
+         var context = document.getElementById('canvas').getContext("2d");
+         context.fillStyle = "#000";
+         context.fillRect(0, 0, context.canvas.width, context.canvas.height);
      };
     </script>
   </body>

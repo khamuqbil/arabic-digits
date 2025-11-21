@@ -1,0 +1,40 @@
+name: Build and Deploy to Azure
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+    - name: Login to ACR
+      run: az acr login --name arabicdigitsacr
+    
+    - name: Build and push image
+      run: |
+        docker build -t arabicdigitsacr.azurecr.io/arabic-digits:${{ github.sha }} .
+        docker tag arabicdigitsacr.azurecr.io/arabic-digits:${{ github.sha }} arabicdigitsacr.azurecr.io/arabic-digits:latest
+        docker push arabicdigitsacr.azurecr.io/arabic-digits:${{ github.sha }}
+        docker push arabicdigitsacr.azurecr.io/arabic-digits:latest
+    
+    - name: Deploy to Azure Container Instances
+      run: |
+        az container create \
+          --resource-group arabic-digits-re \
+          --name arabic-digits-app \
+          --image arabicdigitsacr.azurecr.io/arabic-digits:latest \
+          --registry-login-server arabicdigitsacr.azurecr.io \
+          --registry-username arabicdigitsacr \
+          --registry-password $(az acr credential show --name arabicdigitsacr --query passwords[0].value -o tsv) \
+          --dns-name-label arabic-digits-app \
+          --ports 5000

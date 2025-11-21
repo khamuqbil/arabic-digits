@@ -1,27 +1,76 @@
 var context = document.getElementById('canvas').getContext("2d");
 context.globalCompositeOperation = 'luminosity';
+var canvas = document.getElementById('canvas');
 
+// Get coordinates for both mouse and touch events
+function getEventPos(e) {
+  var rect = canvas.getBoundingClientRect();
+  var scaleX = canvas.width / rect.width;
+  var scaleY = canvas.height / rect.height;
+  
+  var clientX, clientY;
+  
+  if (e.type.indexOf('touch') !== -1) {
+    clientX = e.touches[0] ? e.touches[0].clientX : e.changedTouches[0].clientX;
+    clientY = e.touches[0] ? e.touches[0].clientY : e.changedTouches[0].clientY;
+  } else {
+    clientX = e.clientX;
+    clientY = e.clientY;
+  }
+  
+  return {
+    x: (clientX - rect.left) * scaleX,
+    y: (clientY - rect.top) * scaleY
+  };
+}
+
+// Mouse events
 $('#canvas').mousedown(function(e){
-  var mouseX = e.pageX - this.offsetLeft;
-  var mouseY = e.pageY - this.offsetTop;
-
+  e.preventDefault();
+  var pos = getEventPos(e);
   paint = true;
-  addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
+  addClick(pos.x, pos.y);
   redraw();
 });
 
 $('#canvas').mousemove(function(e){
+  e.preventDefault();
   if(paint){
-    addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
+    var pos = getEventPos(e);
+    addClick(pos.x, pos.y, true);
     redraw();
   }
 });
 
 $('#canvas').mouseup(function(e){
+  e.preventDefault();
   paint = false;
 });
 
 $('#canvas').mouseleave(function(e){
+  paint = false;
+});
+
+// Touch events for mobile
+$('#canvas').on('touchstart', function(e){
+  e.preventDefault();
+  var pos = getEventPos(e.originalEvent);
+  paint = true;
+  addClick(pos.x, pos.y);
+  redraw();
+});
+
+$('#canvas').on('touchmove', function(e){
+  e.preventDefault();
+  if(paint){
+    var pos = getEventPos(e.originalEvent);
+    addClick(pos.x, pos.y, true);
+    redraw();
+  }
+});
+
+$('#canvas').on('touchend touchcancel', function(e){
+  e.preventDefault();
   paint = false;
 });
 
