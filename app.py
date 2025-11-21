@@ -11,8 +11,9 @@ from PIL import Image
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 
-import tensorflow as tf
 import logging
+
+import tensorflow as tf
 
 # Configure TensorFlow to be less verbose
 tf.keras.utils.disable_interactive_logging()
@@ -193,7 +194,7 @@ if __name__ == '__main__':
         exit(1)
     
     # Run the app
-    port = int(os.environ.get('PORT', 8000))
+    port = int(os.environ.get('PORT', 80))
     app.run(host='0.0.0.0', port=port, debug=False)
 else:
     # Load model when running with WSGI server (like gunicorn)
