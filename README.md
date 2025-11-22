@@ -129,7 +129,7 @@ The model was trained on **MADBase (Modified Arabic Digits Database)** featuring
 
 **MADBase**: Sherif Abdelazeem, Ezzat Al-Sherif. "Arabic handwritten digit recognition." _International Journal of Document Analysis and Recognition (IJDAR)_, 11(3):127–141, 2008.
 
-**Original Research**: Khalid Al-Muqbil. "Handwritten Arabic Digits Recognition Using Neural Networks." Supervised by Dr. Nasser Alshammari, College of Computer and Information Sciences, Jouf University, April 2019.
+**Original Research**: Khalid Alkhaldi. "Handwritten Arabic Digits Recognition Using Neural Networks." Supervised by Dr. Nasser Alshammari, College of Computer and Information Sciences, Jouf University, April 2019.
 
 If you use this model in your research, please cite:
 
