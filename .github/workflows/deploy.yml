@@ -3,6 +3,11 @@ name: Build and Deploy to Azure
 on:
   push:
     branches: [ master ]
+# Optimize the workflow avoid unnecessary builds
+    paths-ignore:
+      - 'README.md'
+      - 'note/**'
+      - '*.md'
   workflow_dispatch:
 
 jobs:
