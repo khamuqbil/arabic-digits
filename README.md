@@ -14,7 +14,7 @@ A machine learning model that classifies handwritten Arabic digits (٠-٩). Buil
 
 ## Demo Application
 
-**Live Demo**: [https://arabic-digits-app.azurecontainer.io](https://arabic-digits-app.azurecontainer.io)
+**Live Demo**: [http://arabic-digits-app.qatarcentral.azurecontainer.io](http://arabic-digits-app.qatarcentral.azurecontainer.io)
 
 - **Web Interface**: Draw digits on canvas for classification
 - **API**: `/api/predict` endpoint for programmatic use
