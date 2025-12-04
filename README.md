@@ -1,10 +1,10 @@
 # Arabic Digits Recognition
 
-A machine learning model that classifies handwritten Arabic digits (٠-٩). Built with convolutional neural networks and deployed as a web application for demonstration purposes.
+A machine learning model that classifies handwritten Arabic digits (0-9). Built with convolutional neural networks and deployed as a web application for demonstration purposes.
 
 ## Model Architecture
 
-- **Network Type**: Convolutional Neural Network (CNN)
+- **Model Type**: Convolutional Neural Network (CNN)
 - **Layers**: 5 convolutional layers with max pooling and dropout
 - **Regularization**: Batch normalization and dropout (0.2-0.25)
 - **Activation**: ReLU activation functions, softmax output
